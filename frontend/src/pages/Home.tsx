@@ -61,11 +61,7 @@ const Home = () => {
 					totalWork={totalWork}
 					totalGroups={totalGroups}
 				/>
-				{pathname != '/reminder' ? (
-					<Task user={user} tasks={todos} />
-				) : (
-					<Reminder user={user} tasks={reminders} />
-				)}
+				{pathname != '/reminder' ? <Task user={user} tasks={todos} /> : <Reminder user={user} tasks={reminders} />}
 			</div>
 		</Layout>
 	);

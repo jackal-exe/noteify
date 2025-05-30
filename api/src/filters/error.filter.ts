@@ -1,14 +1,13 @@
+import { isDevEnv } from '@app/app.environment'
+import { UNDEFINED } from '@app/constants/value.constant'
 import {
-	ExceptionFilter,
-	Catch,
-	HttpException,
-	ArgumentsHost,
-	HttpStatus,
-	InternalServerErrorException
-} from '@nestjs/common';
-import _isString from 'lodash/isString';
-import { UNDEFINED } from '@app/constants/value.constant';
-import { isDevEnv } from '@app/app.environment';
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+  InternalServerErrorException
+} from '@nestjs/common'
 
 /**
  * @class HttpExceptionFilter
@@ -17,45 +16,43 @@ import { isDevEnv } from '@app/app.environment';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-	catch(exception: HttpException, host: ArgumentsHost) {
-		const request = host.switchToHttp().getRequest();
-		const response = host.switchToHttp().getResponse();
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const request = host.switchToHttp().getRequest()
+    const response = host.switchToHttp().getResponse()
 
-		const errorStatusCode =
-			exception['response'].error.status || exception['status'] || HttpStatus.INTERNAL_SERVER_ERROR;
-		// console.log(errorStatusCode);
-		const errorMessage =
-			exception['response'].error.message || exception['message'] || 'InternalServerError';
-		// console.log(errorMessage);
-		const errorStack = exception['response'].error.stack || exception.stack;
-		// console.log(errorStack);
+    const errorStatusCode =
+      exception['response'].error.status || exception['status'] || HttpStatus.INTERNAL_SERVER_ERROR
+    // console.log(errorStatusCode);
+    const errorMessage = exception['response'].error.message || exception['message'] || 'InternalServerError'
+    // console.log(errorMessage);
+    const errorStack = exception['response'].error.stack || exception.stack
+    // console.log(errorStack);
 
-		const error = (() => {
-			const errorName =
-				exception['response'].error.name || exception['name'] || InternalServerErrorException.name;
-			if (errorName.toLowerCase().includes('exception')) {
-				return errorName.replaceAll('exception', '').replaceAll('Exception', '');
-			}
-			return errorName;
-		})();
-		// console.log(error);
+    const error = (() => {
+      const errorName = exception['response'].error.name || exception['name'] || InternalServerErrorException.name
+      if (errorName.toLowerCase().includes('exception')) {
+        return errorName.replaceAll('exception', '').replaceAll('Exception', '')
+      }
+      return errorName
+    })()
+    // console.log(error);
 
-		const data = {
-			success: false,
-			statusCode: errorStatusCode,
-			message: errorMessage,
-			error: error,
-			timestamp: new Date().toISOString(),
-			debug: isDevEnv ? errorStack : UNDEFINED
-		};
+    const data = {
+      success: false,
+      statusCode: errorStatusCode,
+      message: errorMessage,
+      error: error,
+      timestamp: new Date().toISOString(),
+      debug: isDevEnv ? errorStack : UNDEFINED
+    }
 
-		// default 404
-		if (exception.getStatus() === HttpStatus.NOT_FOUND) {
-			data.statusCode = HttpStatus.NOT_FOUND;
-			data.error = 'HttpNotFound';
-			data.message = `Invalid API: ${request.method} > ${request.url}`;
-		}
+    // default 404
+    if (exception.getStatus() === HttpStatus.NOT_FOUND) {
+      data.statusCode = HttpStatus.NOT_FOUND
+      data.error = 'HttpNotFound'
+      data.message = `Invalid API: ${request.method} > ${request.url}`
+    }
 
-		return response.status(errorStatusCode).jsonp(data);
-	}
+    return response.status(errorStatusCode).jsonp(data)
+  }
 }

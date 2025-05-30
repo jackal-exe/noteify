@@ -30,9 +30,7 @@ export const Sidebar = ({
 							</div>
 							<span className="font-semibold">Upcoming</span>
 						</div>
-						<div className="rounded-lg bg-gray-700/90 px-3 py-1 font-semibold text-gray-200 shadow-sm">
-							12
-						</div>
+						<div className="rounded-lg bg-gray-700/90 px-3 py-1 font-semibold text-gray-200 shadow-sm">12</div>
 					</li>
 					<li
 						className="flex cursor-pointer items-center justify-between rounded-xl border border-transparent p-3 transition duration-300 hover:border-gray-700 hover:bg-gray-700/80 hover:shadow-md"

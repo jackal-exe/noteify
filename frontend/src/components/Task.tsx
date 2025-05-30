@@ -7,13 +7,7 @@ import { commonDate } from '../utils/date-formatter';
 import { notification } from '../utils/toast';
 import { AddTask } from './AddTask';
 
-export const Task = ({
-	user,
-	tasks
-}: {
-	user: DeepPartial<UserType>;
-	tasks: Partial<TodoTaskType[]>;
-}) => {
+export const Task = ({ user, tasks }: { user: DeepPartial<UserType>; tasks: Partial<TodoTaskType[]> }) => {
 	const { checkToken } = useAuth();
 	const [formType, setFormType] = useState<string>('');
 	const [handleOpen, setHandleOpen] = useState<boolean>(false);
@@ -38,9 +32,7 @@ export const Task = ({
 
 	const tasksByCategory =
 		tasksCategory != 'Tasks'
-			? Array.from(tasks ?? []).filter(
-					(task) => task?.taskType?.toLowerCase() == tasksCategory.toLowerCase()
-				)
+			? Array.from(tasks ?? []).filter((task) => task?.taskType?.toLowerCase() == tasksCategory.toLowerCase())
 			: tasks;
 
 	const handleOpenModal = (taskId?: number) => {
@@ -111,10 +103,7 @@ export const Task = ({
 						<span className="font-medium text-gray-400">Add New Task</span>
 					</div>
 					{Array.from(tasksByCategory ?? [])
-						.sort(
-							(a, b) =>
-								new Date(a?.createdAt ?? '').getTime() - new Date(b?.createdAt ?? '').getTime()
-						)
+						.sort((a, b) => new Date(a?.createdAt ?? '').getTime() - new Date(b?.createdAt ?? '').getTime())
 						.map((task) => (
 							<div
 								key={task?.id}
@@ -176,20 +165,14 @@ export const Task = ({
 							</div>
 						))}
 					{!Array.from(tasks ?? []).length && (
-						<div className="text-gray-400">
-							Looks like you don't have any tasks yet. Start adding some!
-						</div>
+						<div className="text-gray-400">Looks like you don't have any tasks yet. Start adding some!</div>
 					)}
 				</div>
 			</div>
 
 			{handleOpen && (
 				<div className="fixed top-0 left-0 flex h-full w-full items-center justify-center bg-black/50 backdrop-blur-sm">
-					<AddTask
-						formType={formType}
-						selectedTask={selectedTask}
-						handleCloseModal={handleCloseModal}
-					/>
+					<AddTask formType={formType} selectedTask={selectedTask} handleCloseModal={handleCloseModal} />
 				</div>
 			)}
 		</div>

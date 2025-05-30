@@ -3,13 +3,7 @@ import { useState } from 'react';
 import { ReminderTaskType, UserType } from '../types';
 import { AddReminder } from './AddReminder';
 
-export const Reminder = ({
-	user,
-	tasks
-}: {
-	user: UserType;
-	tasks: Partial<ReminderTaskType[]>;
-}) => {
+export const Reminder = ({ user, tasks }: { user: UserType; tasks: Partial<ReminderTaskType[]> }) => {
 	const [formType, setFormType] = useState<string>('');
 	const [handleOpen, setHandleOpen] = useState<boolean>(false);
 	const [selectedTask, setSelectedTask] = useState<Partial<ReminderTaskType>>({});
@@ -55,10 +49,7 @@ export const Reminder = ({
 					<div className="h-[calc(100%-30px)] h-auto rounded-2xl border border-gray-700/50 bg-gradient-to-br from-gray-800 to-gray-900 p-6 shadow-xl">
 						<div className="flex flex-wrap gap-5">
 							{Array.from(tasks ?? [])
-								.sort(
-									(a, b) =>
-										new Date(a?.createdAt ?? '').getTime() - new Date(b?.createdAt ?? '').getTime()
-								)
+								.sort((a, b) => new Date(a?.createdAt ?? '').getTime() - new Date(b?.createdAt ?? '').getTime())
 								.map((reminder) => (
 									<div
 										key={reminder?.id}
@@ -78,9 +69,7 @@ export const Reminder = ({
 														</p>
 													))
 											) : (
-												<p className="my-1.5 text-justify text-sm text-gray-400">
-													{reminder?.note}
-												</p>
+												<p className="my-1.5 text-justify text-sm text-gray-400">{reminder?.note}</p>
 											)}
 										</div>
 									</div>
@@ -96,11 +85,7 @@ export const Reminder = ({
 			</div>
 			{handleOpen && (
 				<div className="fixed top-0 left-0 flex h-full w-full items-center justify-center bg-black/50 backdrop-blur-sm">
-					<AddReminder
-						formType={formType}
-						selectedTask={selectedTask}
-						handleCloseModal={handleCloseModal}
-					/>
+					<AddReminder formType={formType} selectedTask={selectedTask} handleCloseModal={handleCloseModal} />
 				</div>
 			)}
 		</div>

@@ -19,9 +19,7 @@ export const AddTask = ({
 	const initialState = {
 		title: selectedTask.title || '',
 		description: selectedTask.description || '',
-		deadline: selectedTask.deadline
-			? commonDate(selectedTask.deadline)
-			: commonDate(new Date().toJSON()),
+		deadline: selectedTask.deadline ? commonDate(selectedTask.deadline) : commonDate(new Date().toJSON()),
 		subtasks: selectedTask.subtasks || [],
 		taskType: selectedTask.taskType || 'Personal'
 	};
@@ -34,9 +32,7 @@ export const AddTask = ({
 		setForm((previous) => ({ ...previous, subtasks }));
 	};
 
-	const setFormValues = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-	) => {
+	const setFormValues = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = event.target;
 		setForm({ ...form, [name]: value });
 	};
@@ -55,9 +51,7 @@ export const AddTask = ({
 	};
 
 	const handleRemoveAddedTask = (taskName: string) => {
-		const taskAfterRemoved = form.subtasks?.filter(
-			(subtask) => subtask.title != taskName
-		) as Subtasks[];
+		const taskAfterRemoved = form.subtasks?.filter((subtask) => subtask.title != taskName) as Subtasks[];
 		setSubtasks(taskAfterRemoved);
 	};
 
@@ -157,11 +151,7 @@ export const AddTask = ({
 				<div className="mb-4">
 					<span className="font-medium text-gray-200">Subtasks:</span>
 					<div className="mb-2 flex items-center border-b-2 border-gray-600 py-2">
-						<Add
-							onClick={handleAddNewSubtasksOption}
-							className="mr-2 cursor-pointer"
-							style={{ color: '#e5e7eb' }}
-						/>
+						<Add onClick={handleAddNewSubtasksOption} className="mr-2 cursor-pointer" style={{ color: '#e5e7eb' }} />
 						<input
 							type="text"
 							placeholder="Add New Subtask"

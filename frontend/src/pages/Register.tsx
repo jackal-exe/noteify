@@ -161,17 +161,7 @@ interface Input {
 	onChange: (_data: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({
-	type,
-	name,
-	label,
-	value,
-	elementId,
-	placeholder,
-	onInput,
-	onChange,
-	error
-}: Input) => {
+const Input = ({ type, name, label, value, elementId, placeholder, onInput, onChange, error }: Input) => {
 	return (
 		<div className="flex flex-col gap-2">
 			<label htmlFor={elementId} className="text-white">

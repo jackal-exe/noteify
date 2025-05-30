@@ -53,9 +53,7 @@ const Login = () => {
 						error={emailError}
 						onInput={useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 							const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-							!EMAIL_REGEX.test(event.target.value)
-								? setEmailError('email not valid!')
-								: setEmailError('');
+							!EMAIL_REGEX.test(event.target.value) ? setEmailError('email not valid!') : setEmailError('');
 						}, [])}
 						onChange={useCallback((event) => setEmail(event.target.value), [])}
 					/>
@@ -67,10 +65,7 @@ const Login = () => {
 						placeholder="password"
 						onChange={useCallback((event) => setPassword(event.target.value), [])}
 					/>
-					<button
-						className="rounded px-4 py-2 text-white"
-						style={{ backgroundColor: MYRGB1 }}
-						type="submit">
+					<button className="rounded px-4 py-2 text-white" style={{ backgroundColor: MYRGB1 }} type="submit">
 						Sign in
 					</button>
 				</form>
@@ -90,28 +85,26 @@ interface Input {
 	onChange: (_data: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = memo(
-	({ type, name, label, elementId, placeholder, error, onInput, onChange }: Input) => {
-		return (
-			<div className="flex flex-col gap-2">
-				<label htmlFor={elementId} className="text-white">
-					{label}
-				</label>
-				<input
-					id={elementId}
-					className={`rounded border-2 p-2 text-white duration-300 outline-none`}
-					style={{ borderColor: MYRGB1 }}
-					type={type}
-					name={name}
-					placeholder={placeholder}
-					onInput={onInput}
-					onChange={onChange}
-				/>
-				{error ? <span className="text-red-500">{error}</span> : null}
-			</div>
-		);
-	}
-);
+const Input = memo(({ type, name, label, elementId, placeholder, error, onInput, onChange }: Input) => {
+	return (
+		<div className="flex flex-col gap-2">
+			<label htmlFor={elementId} className="text-white">
+				{label}
+			</label>
+			<input
+				id={elementId}
+				className={`rounded border-2 p-2 text-white duration-300 outline-none`}
+				style={{ borderColor: MYRGB1 }}
+				type={type}
+				name={name}
+				placeholder={placeholder}
+				onInput={onInput}
+				onChange={onChange}
+			/>
+			{error ? <span className="text-red-500">{error}</span> : null}
+		</div>
+	);
+});
 
 Input.displayName = 'Input';
 

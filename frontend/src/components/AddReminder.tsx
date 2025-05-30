@@ -23,9 +23,7 @@ export const AddReminder = ({
 		...initialState
 	});
 
-	const setFormValues = (
-		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-	) => {
+	const setFormValues = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = event.target;
 		setForm({ ...form, [name]: value });
 	};
