@@ -9,9 +9,10 @@ const logger = createLogger({ scope: 'PostgresqlService', time: true })
 export class PgConnectProvider implements OnApplicationBootstrap, OnModuleDestroy {
   constructor(private readonly pool: Pool) {
     this.pool = new Pool({
+      host: POSTGRES.host,
+      port: POSTGRES.port as number,
       user: POSTGRES.username,
       password: POSTGRES.password,
-      host: POSTGRES.host,
       database: POSTGRES.database
     })
   }

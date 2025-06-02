@@ -1,11 +1,9 @@
 import path from 'path'
-import yargs from 'yargs'
+import { isProdEnv } from './app.environment'
 
 const ROOT_PATH = path.join(__dirname, '..')
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const packageJSON = require(path.resolve(ROOT_PATH, 'package.json'))
-
-const argv = yargs.argv as Record<string, string | void>
 
 export const APP = {
   PORT: 8800,
@@ -23,18 +21,19 @@ export const PROJECT = {
 }
 
 export const POSTGRES = {
-  host: '/private/tmp',
-  username: 'john',
-  password: 'john',
-  database: 'noteify'
+  host: isProdEnv ? process.env.POSTGRES_HOST : '/private/tmp',
+  port: isProdEnv ? process.env.POSTGRES_PORT : 5432,
+  username: isProdEnv ? process.env.POSTGRES_USER : 'john',
+  password: isProdEnv ? process.env.POSTGRES_PASSWORD : 'john',
+  database: isProdEnv ? process.env.POSTGRES_DATABASE : 'noteify'
 }
 
 export const REDIS = {
-  namespace: argv.redis_namespace || 'noteify',
-  host: argv.redis_host || 'localhost',
-  port: argv.redis_port || 6379,
-  username: argv.redis_username || null,
-  password: argv.redis_password || null
+  namespace: 'noteify',
+  host: isProdEnv ? process.env.REDIS_HOST : '127.0.0.1',
+  port: isProdEnv ? process.env.REDIS_PORT : 6379,
+  username: isProdEnv ? process.env.REDIS_USER : null,
+  password: isProdEnv ? process.env.REDIS_PASSWORD : null
 }
 
 export const JWT = {
