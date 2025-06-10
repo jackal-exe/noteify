@@ -1,0 +1,58 @@
+name: noteify-backend
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      - POSTGRES_DB=noteify
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - 6380:6379
+    volumes:
+      - redis_volume:/data
+    networks:
+      - backend
+  nest:
+    build:
+      context: .
+    container_name: nest
+    image: noteify-backend
+    ports:
+      - 8800:8800
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - backend
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=${JWT_SECRET}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    pull_policy: build
+
+volumes:
+  postgres_volume:
+    name: noteify-postgres
+  redis_volume:
+    name: noteify-redis
+
+networks:
+  backend:
+    name: noteify-backend
